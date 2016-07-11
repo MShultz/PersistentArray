@@ -9,27 +9,30 @@ public class PersistentArrayTest {
 
 	@Test
 	public void test() {
+		final int ARRAY_SIZE = 20;
 		File testFile = new File("src/testDoc.bin");
 		try {
 			assertTrue(testFile.createNewFile());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		PersistentArray.initialize("src/testDoc.bin", 20, -1);
+		PersistentArray.initialize("src/testDoc.bin", ARRAY_SIZE, -1);
 		PersistentArray pa = new PersistentArray("src/testDoc.bin");
-		for (int i = 0; i < 20; ++i) {
+		assertEquals(ARRAY_SIZE, pa.getLength());
+		for (int i = 0; i < pa.getLength(); ++i) {
 			assertTrue(pa.get(i) == -1);
 		}
 		pa.set(3, 333);
 		assertTrue(pa.get(3) == 333);
+		assertEquals(-1 ,pa.get(2));
+		assertEquals(-1, pa.get(4));
 		pa.set(3, -4);
 		assertTrue(pa.get(3) == -4);
 		assertTrue(pa.get(19) == -1);	
 	    assertTrue(pa.getLength() == 20);
 	    pa.close();
 	    PersistentArray.delete("src/testDoc.bin");
-	    assertFalse(testFile.exists());
-		
+	    assertFalse(testFile.exists());		
 	}
 
 }
