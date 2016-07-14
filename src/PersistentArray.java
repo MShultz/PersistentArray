@@ -20,7 +20,9 @@ public class PersistentArray implements Array {
 			long initialValue) {
 		RandomAccessFile initialFile = null;
 		try {
-			initialFile = new RandomAccessFile(new File(arrayFileName), "rw");
+			File file = new File(arrayFileName);
+			file.createNewFile();
+			initialFile = new RandomAccessFile(file, "rw");
 
 			for (int i = 0; i < arraySize; ++i) {
 				initialFile.seek(i * LONG_SIZE);
@@ -33,10 +35,8 @@ public class PersistentArray implements Array {
 			try {
 				initialFile.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		//	initialFile = null;
 		}
 	}
 
@@ -81,8 +81,6 @@ public class PersistentArray implements Array {
 	public void close() {
 		try {
 			raFile.close();
-			//raFile = null;
-			//System.gc();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

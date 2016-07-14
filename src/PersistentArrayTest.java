@@ -10,12 +10,6 @@ public class PersistentArrayTest {
 	@Test
 	public void test() {
 		final int ARRAY_SIZE = 20;
-		File testFile = new File("src/testDoc.bin");
-		try {
-			assertTrue(testFile.createNewFile());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 		PersistentArray.initialize("src/testDoc.bin", ARRAY_SIZE, -1);
 		PersistentArray pa = new PersistentArray("src/testDoc.bin");
 		assertEquals(ARRAY_SIZE, pa.getLength());
@@ -32,7 +26,7 @@ public class PersistentArrayTest {
 	    assertTrue(pa.getLength() == 20);
 	    pa.close();
 	    PersistentArray.delete("src/testDoc.bin");
-	    assertFalse(testFile.exists());		
+	    assertFalse(new File("src/testDoc.bin").exists());		
 	}
 
 }
